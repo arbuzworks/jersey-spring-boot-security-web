@@ -56,12 +56,6 @@ public class PaymentResource
     @Autowired
     private PaymentService paymentService;
 
-    @Context
-    private Request request;
-
-    @Context
-    private UriInfo uriInfo;
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Authorize", notes = "Authorizes payment transaction.")
@@ -75,7 +69,9 @@ public class PaymentResource
     public Response authorize(@ApiParam(value = "Accept Language", allowableValues = "en, fr")
                               @HeaderParam("Accept-Language") Locale locale,
                               @ApiParam(value = "Authorization request object", required = true)
-                              @Valid AuthorizationRequest authorizationRequest) throws PaymentException
+                              @Valid AuthorizationRequest authorizationRequest,
+                              @Context Request request,
+                              @Context UriInfo uriInfo) throws PaymentException
     {
         Variant variant = request.selectVariant(ApiConstants.LANGUAGE_VARIANTS);
 
@@ -159,7 +155,9 @@ public class PaymentResource
     })
     public Response removeTransaction(@ApiParam(value = "Accept Language", allowableValues = "en, fr")
                                @HeaderParam("Accept-Language") Locale locale,
-                               @ApiParam(value = "transactionId to remove") @PathParam("transactionId") String transactionId) throws PaymentException
+                               @ApiParam(value = "transactionId to remove") @PathParam("transactionId") String transactionId,
+                               @Context Request request,
+                               @Context UriInfo uriInfo) throws PaymentException
     {
         Variant variant = request.selectVariant(ApiConstants.LANGUAGE_VARIANTS);
 
@@ -191,7 +189,9 @@ public class PaymentResource
                                       @HeaderParam("Accept-Language") Locale locale,
                                       @ApiParam(value = "transactionId to update") @PathParam("transactionId") String transactionId,
                                       @ApiParam(value = "Update transaction request", required = true)
-                                      @Valid UpdateTransactionRequest updateTransactionRequest) throws PaymentException
+                                      @Valid UpdateTransactionRequest updateTransactionRequest,
+                                      @Context Request request,
+                                      @Context UriInfo uriInfo) throws PaymentException
     {
         Variant variant = request.selectVariant(ApiConstants.LANGUAGE_VARIANTS);
 

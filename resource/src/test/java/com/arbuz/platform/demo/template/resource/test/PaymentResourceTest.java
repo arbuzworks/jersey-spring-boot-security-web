@@ -64,7 +64,7 @@ public class PaymentResourceTest
 
         when(uriInfo.getAbsolutePathBuilder()).thenReturn(new JerseyUriBuilder());
 
-        assertTrue(paymentResource.authorize(Locale.US, new AuthorizationRequest()).getStatus() == Response.Status.OK.getStatusCode());
+        assertTrue(paymentResource.authorize(Locale.US, new AuthorizationRequest(), request, uriInfo).getStatus() == Response.Status.OK.getStatusCode());
 
         verify(request).selectVariant(anyList());
         verify(paymentService).authorize(any(AuthorizationRequest.class), any(Locale.class));
@@ -77,7 +77,7 @@ public class PaymentResourceTest
     {
         when(paymentService.retrieveTransactions(anyString(), any(Locale.class))).thenReturn(new ArrayList());
 
-        //assertTrue(paymentResource.retrieveTransactions(Locale.US, "PENDING").getStatus() == Response.Status.OK.getStatusCode());
+        assertTrue(paymentResource.retrieveTransactions(Locale.US, "PENDING", request, uriInfo).getStatus() == Response.Status.OK.getStatusCode());
 
         verify(paymentService).retrieveTransactions(anyString(), any(Locale.class));
         verify(uriInfo).getBaseUriBuilder();
@@ -88,7 +88,7 @@ public class PaymentResourceTest
     {
         when(paymentService.updateTransaction(anyString(), any(UpdateTransactionRequest.class), any(Locale.class))).thenReturn(true);
 
-        assertTrue(paymentResource.updateTransaction(Locale.US, RandomStringUtils.randomAlphanumeric(32).toUpperCase(), new UpdateTransactionRequest()).getStatus() == Response.Status.OK.getStatusCode());
+        assertTrue(paymentResource.updateTransaction(Locale.US, RandomStringUtils.randomAlphanumeric(32).toUpperCase(), new UpdateTransactionRequest(), request, uriInfo).getStatus() == Response.Status.OK.getStatusCode());
 
         verify(paymentService).updateTransaction(anyString(), any(UpdateTransactionRequest.class), any(Locale.class));
     }
@@ -98,7 +98,7 @@ public class PaymentResourceTest
     {
         when(paymentService.removeTransaction(anyString(), any(Locale.class))).thenReturn(true);
 
-        assertTrue(paymentResource.removeTransaction(Locale.US, RandomStringUtils.randomAlphanumeric(32).toUpperCase()).getStatus() == Response.Status.OK.getStatusCode());
+        assertTrue(paymentResource.removeTransaction(Locale.US, RandomStringUtils.randomAlphanumeric(32).toUpperCase(), request, uriInfo).getStatus() == Response.Status.OK.getStatusCode());
 
         verify(paymentService).removeTransaction(anyString(), any(Locale.class));
     }
