@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/batch
+       http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+
+    <batch:job id="transactionCounterJob" job-repository="jobRepository">
+        <batch:step id="transactionCounterStep">
+            <batch:tasklet ref="transactionCounterTasklet"/>
+        </batch:step>
+    </batch:job>
+
+    <bean id="transactionCounterTasklet" class="com.arbuz.platform.demo.template.batch.tasklet.TransactionCounterTasklet"/>
+
+    <bean id="transactionCounterTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="transactionCounterJobDetail"/>
+        <property name="cronExpression" value="${transaction.counter.cron.expression}"/>
+    </bean>
+
+
+    <bean id="transactionCounterJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.arbuz.platform.demo.template.batch.quartz.TransactionCounterJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+</beans>

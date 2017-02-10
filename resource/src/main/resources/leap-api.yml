@@ -1,0 +1,19 @@
+server.port: ${appPort:8080}
+
+# Spring MVC dispatcher servlet path.
+# Needs to be different than Jersey's to enable/disable Actuator endpoints access (/info, /health, ...)
+server.servlet-path: /
+
+# Jersey dispatcher servlet
+spring.jersey.application-path: /api
+
+#app properties
+jdbc.driverClassName: @database.driver@
+jdbc.driverUrl: @database.url@demo?useSSL=false&autoReconnect=true
+jdbc.userName: @database.username@
+jdbc.password: @database.password@
+
+documenation.url: http://localhost:8080/demo/docs
+
+security.basic.enabled: false
+management.security.enabled: false

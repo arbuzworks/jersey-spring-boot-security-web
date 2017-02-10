@@ -1,0 +1,12 @@
+server.port: ${appPort:8081}
+spring.batch.job.enabled: false
+spring.batch.initializer.enabled: false
+
+#app properties
+jdbc.driverClassName: @database.driver@
+jdbc.driverUrl: @database.url@demo?useSSL=false&autoReconnect=true
+jdbc.userName: @database.username@
+jdbc.password: @database.password@
+hibernate.dialect: @database.hibernate.dialect@
+
+transaction.counter.cron.expression: 0/20 * * * * ?
