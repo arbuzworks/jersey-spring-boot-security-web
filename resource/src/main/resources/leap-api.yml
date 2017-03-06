@@ -16,4 +16,11 @@ jdbc.password: @database.password@
 documenation.url: http://localhost:8080/demo/docs
 
 security.basic.enabled: false
-management.security.enabled: false
+
+management.port: 8081
+management.security.enabled: true
+endpoints.health.sensitive: true
+
+security.user.name: admin
+security.user.password: admin
+management.security.roles: ACTUATOR
